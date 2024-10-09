@@ -7,6 +7,7 @@ const GlobalStyles = createGlobalStyle`
 
     body {
         margin: 0;
+        padding-top: 4rem;
         color: #333;
         --type-first: Helvetica, Arial, sans-serif;
         --type-second: 'Spectral', Georgia;

@@ -1,14 +1,17 @@
 import React from "react";
 import { HeaderContainer } from "./style";
 import { Link } from "react-router-dom";
+import  Dogs  from "../../src/assets/dogs.svg";
+
 
 function Header() {
   return (
     <HeaderContainer>
-      <h2>Header</h2>
       <nav className="container">
-        <Link to="/home">Home</Link>
-        <Link to="/login">Login / Criar</Link>
+        <Link to="/">
+          <img src={Dogs} alt="Dogs Logo" />
+        </Link>
+        <Link to="/login" className="login">Login / Criar</Link>
       </nav>
 
     </HeaderContainer>
