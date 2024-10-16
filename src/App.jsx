@@ -5,18 +5,21 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../Components/Home";
 import Login from "../Components/Login";
 import GlobalStyles from "../GlobalStyle";
+import { UserContextStorage } from "./Context/UserContext";
 
 function App() {
   return (
     <div>
-      <GlobalStyles/>
+      <GlobalStyles />
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home/>}/> 
-          <Route path="/login/*" element={<Login/>}/> 
-        </Routes>
-        <Footer />
+        <UserContextStorage>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login/*" element={<Login />} />
+          </Routes>
+          <Footer />
+        </UserContextStorage>
       </BrowserRouter>
     </div>
   );

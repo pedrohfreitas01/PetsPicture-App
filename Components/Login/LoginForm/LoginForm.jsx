@@ -1,68 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { json, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { LoginFormContainer } from "./style";
 import Input from "../../Input";
 import { Button } from "../../Button/style";
 import useForm from "../../../src/Hooks/useForm";
-import { TOKEN_POST, USER_GET } from "../../../src/api";
+import { UserContext } from "../../../src/Context/UserContext"; // Importa o UserContext
 
 function LoginForm() {
   const username = useForm();
   const password = useForm();
-  // const [username, setUsername] = useState();
-  // const [password, setPassword] = useState();
+  const { userLogin } = useContext(UserContext); // Usa o contexto para pegar a função userLogin
 
-  useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    if (token) {
-      getUser(token);
-    }
-  });
-
-  const getUser = async (token) => {
-    const { url, options } = USER_GET(token);
-    const res = await fetch(url, options);
-    const data = await res.json();
-    console.log(data);
-  };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      const { url, options } = TOKEN_POST({
-        username: username.value,
-        password: password.value,
-      });
-
-      const response = await fetch(url, options);
-
-      const data = await response.json();
-
-      window.localStorage.setItem("token", data.token);
-      getUser(data.token);
-
-      if (response.ok) {
-        console.log("Login successful:", data);
-      } else {
-        console.error("Error:", data);
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
+    userLogin(username.value, password.value); // Simplesmente chama a função userLogin
   };
 
   return (
     <LoginFormContainer>
       <h1>Login</h1>
       <form action="" onSubmit={handleSubmit}>
-        <Input label="User" type="text" name="username" {...username}></Input>
-        <Input
-          label="Password"
-          type="password"
-          name="password"
-          {...password}
-        ></Input>
+        <Input label="User" type="text" name="username" {...username} />
+        <Input label="Password" type="password" name="password" {...password} />
         <Button>Enviar</Button>
       </form>
       <Link to="/login/criar">Cadastro</Link>
